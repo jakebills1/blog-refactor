@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header, Form,  } from 'semantic-ui-react';
 import { connect, } from 'react-redux';
+import { addBlog, } from '../reducers/blogs'
 class BlogForm extends React.Component {
   state = { title: "", body: "", }
   handleChange =(e) => {
@@ -9,10 +10,10 @@ class BlogForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { title, body, } = this.state;
-    const { dispatch, id, } = this.props;
-    const blog = {title, body, id}
-    dispatch({ type: "ADD_BLOG", blog })
-    dispatch({ type: "NEW_ID"})
+    const { dispatch, } = this.props;
+    const blog = {title, body}
+    dispatch(addBlog(blog))
+    // dispatch({ type: "NEW_ID"})
     this.setState({ title: "", body: "", })
     this.props.history.push("/")
   }
@@ -43,7 +44,7 @@ class BlogForm extends React.Component {
     )
   }
 }
-const mapPropsToState = (state) => {
-  return { id: state.idGen, }
-}
-export default connect(mapPropsToState)(BlogForm);
+// const mapPropsToState = (state) => {
+//   return { id: state.idGen, }
+// }
+export default connect()(BlogForm);
