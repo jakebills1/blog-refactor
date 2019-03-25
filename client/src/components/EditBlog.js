@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
-import { connect, } from 'react-redux'
+import { connect, } from 'react-redux';
+import { editBlog, } from '../reducers/blogs'
 class EditBlog extends React.Component {
   state = { ...this.props.location.state}
   handleChange = (e) => {
@@ -9,7 +10,7 @@ class EditBlog extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const editedBlog = { ...this.state};
-    this.props.dispatch({ type: "EDIT_BLOG", editedBlog})
+    this.props.dispatch(editBlog(editedBlog))
     this.props.history.push("/")
   }
   render() {

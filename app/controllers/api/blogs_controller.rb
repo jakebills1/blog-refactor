@@ -18,7 +18,7 @@ class Api::BlogsController < ApplicationController
   end
 
   def update
-    if @blog.update
+    if @blog.update(blog_params)
       render json: @blog
     else
       render json: @blog.errors, status: 422

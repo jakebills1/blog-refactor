@@ -11,14 +11,11 @@ const blogs = (state = [], action) => {
       return state.filter( blog => blog.id !== action.id );
     case "EDIT_BLOG":
       return state.map(blog => {
-        if (blog.id === action.editedBlog.id) {
-          return Object.assign({}, blog, {
-            title: action.editedBlog.title,
-            body: action.editedBlog.body,
-            id: action.editedBlog.id
-          })
-        }
+        if (blog.id === action.blog.id) {
+          return action.blog
+        } else {
         return blog
+        }
       })
     default:
       return state;
@@ -40,6 +37,12 @@ export const deleteBlog = (id) => {
   return (dispatch) => {
     axios.delete(`/api/blogs/${id}`)
       .then( res => dispatch({ type: "REMOVE_BLOG", id: id}))
+  }
+}
+export const editBlog = (editedBlog) => {
+  return (dispatch) => {
+    axios.put(`/api/blogs/${editedBlog.id}`, editedBlog)
+      .then( res => dispatch({ type: "EDIT_BLOG", blog: res.data}))
   }
 }
 export default blogs;
